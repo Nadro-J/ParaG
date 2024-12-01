@@ -1,0 +1,600 @@
+{
+  "acala": {
+    "url": "wss://acala-rpc-0.aca-api.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 131,
+      "total_count": 132,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 7426643
+        }
+      },
+      "ended_at": "2024-11-25"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:43:25.554448"
+  },
+  "ajuna": {
+    "url": "wss://ajuna.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 25,
+      "total_count": 26,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 6023092
+        }
+      },
+      "ended_at": "2024-11-08"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:43:29.022073"
+  },
+  "astar": {
+    "url": "wss://rpc.astar.network",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:43:31.099110"
+  },
+  "aventus": {
+    "url": "wss://public-rpc.mainnet.aventus.network",
+    "democracy": null,
+    "opengov": {
+      "type": "opengov",
+      "total_count": 0,
+      "info": null
+    },
+    "last_checked": "2024-12-01T20:43:32.642724"
+  },
+  "bifrost": {
+    "url": "wss://bifrost-polkadot.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 146,
+      "total_count": 147,
+      "info": {
+        "Finished": {
+          "approved": false,
+          "end": 5644800
+        }
+      },
+      "ended_at": "2024-10-01"
+    },
+    "opengov": {
+      "type": "opengov",
+      "index": 61,
+      "total_count": 62,
+      "info": {
+        "Approved": [
+          6015515,
+          {
+            "who": "fAGgdvAYwqCwpt3Wda1mzpACnNyESbfgfgvm1RLSudBsUEu",
+            "amount": 10000000000000
+          },
+          {
+            "who": "dmTEFZ77m7WtJmd7PY6pMh111uTtW9jpwfwasTGsWKUGp5M",
+            "amount": 5000000000000000
+          }
+        ]
+      },
+      "ended_at": "2024-11-28"
+    },
+    "last_checked": "2024-12-01T20:43:46.722569"
+  },
+  "bitgreen": {
+    "url": "wss://mainnet.bitgreen.org",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:43:48.542305"
+  },
+  "centrifuge": {
+    "url": "wss://rpc-centrifuge.luckyfriday.io",
+    "democracy": {
+      "type": "democracy",
+      "index": 66,
+      "total_count": 67,
+      "info": {
+        "Ongoing": {
+          "end": 6830805,
+          "proposal": {
+            "Lookup": {
+              "hash": "0xead28556de4e8fdafee582bb9397fca1e86f7e60272999a9a08b4f6c3368901e",
+              "len": 3
+            }
+          },
+          "threshold": "SimpleMajority",
+          "delay": 0,
+          "tally": {
+            "ayes": 4972673606568830353711830,
+            "nays": 0,
+            "turnout": 4457687106568830353711830
+          }
+        }
+      }
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:43:52.868020"
+  },
+  "composable": {
+    "url": "wss://rpc.composable.finance",
+    "democracy": {
+      "type": "democracy",
+      "total_count": 0,
+      "info": null
+    },
+    "opengov": {
+      "type": "opengov",
+      "index": 35,
+      "total_count": 36,
+      "info": {
+        "Approved": [
+          4941099,
+          {
+            "who": "62VQNnp5aUeH93kMHfNxUhvGfeSTw7UoyqgtMLWEeXoqSmu2",
+            "amount": 0
+          },
+          {
+            "who": "62VQNnp5aUeH93kMHfNxUhvGfeSTw7UoyqgtMLWEeXoqSmu2",
+            "amount": 0
+          }
+        ]
+      },
+      "ended_at": "2024-10-19"
+    },
+    "last_checked": "2024-12-01T20:43:55.078388"
+  },
+  "continuum": {
+    "url": "wss://continuum-rpc-1.metaverse.network/wss",
+    "democracy": {
+      "type": "democracy",
+      "index": 0,
+      "total_count": 1,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 1218960
+        }
+      },
+      "ended_at": "2024-04-17"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:03.698077"
+  },
+  "crust": {
+    "url": "wss://crust-parachain.crustnetwork.xyz",
+    "democracy": {
+      "type": "democracy",
+      "index": 24,
+      "total_count": 25,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 4419495
+        }
+      },
+      "ended_at": "2024-10-24"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:09.756238"
+  },
+  "darwinia": {
+    "url": "wss://rpc.darwinia.network",
+    "democracy": null,
+    "opengov": {
+      "type": "opengov",
+      "index": 37,
+      "total_count": 38,
+      "info": {
+        "Approved": [
+          4652085,
+          {
+            "who": "0x3e25247cff03f99a7d83b28f207112234fee73a6",
+            "amount": 5000000000000000000000
+          },
+          null
+        ]
+      },
+      "ended_at": "2024-11-19"
+    },
+    "last_checked": "2024-12-01T20:44:21.807119"
+  },
+  "energy_web": {
+    "url": "wss://public-rpc.mainnet.energywebx.com",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:23.115712"
+  },
+  "frequency": {
+    "url": "wss://0.rpc.frequency.xyz",
+    "democracy": {
+      "type": "democracy",
+      "index": 17,
+      "total_count": 18,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 4929055
+        }
+      },
+      "ended_at": "2024-10-24"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:28.219245"
+  },
+  "hashed": {
+    "url": "wss://c1.hashed.network",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:31.188459"
+  },
+  "hydradx": {
+    "url": "wss://hydradx.paras.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 194,
+      "total_count": 195,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 6493960
+        }
+      },
+      "ended_at": "2024-11-30"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:35.802237"
+  },
+  "hyperbridge": {
+    "url": "wss://nexus.ibp.network",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:38.556200"
+  },
+  "integritee": {
+    "url": "wss://polkadot.api.integritee.network",
+    "democracy": {
+      "type": "democracy",
+      "total_count": 0,
+      "info": null
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:40.484194"
+  },
+  "interlay": {
+    "url": "wss://api.interlay.io/parachain",
+    "democracy": {
+      "type": "democracy",
+      "index": 122,
+      "total_count": 123,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 6665771
+        }
+      },
+      "ended_at": "2024-11-29"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:42.615708"
+  },
+  "invarch": {
+    "url": "wss://invarch-rpc.dwellir.com",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:45.632661"
+  },
+  "kilt": {
+    "url": "wss://kilt.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 48,
+      "total_count": 49,
+      "info": {
+        "Ongoing": {
+          "end": 7660800,
+          "proposal": {
+            "Lookup": {
+              "hash": "0x9fa3521673da650a1e019ad88778e8bb04e29f0fc1f705c20e2ac3b158a1bc4f",
+              "len": 73
+            }
+          },
+          "threshold": "SuperMajorityApprove",
+          "delay": 7200,
+          "tally": {
+            "ayes": 0,
+            "nays": 0,
+            "turnout": 0
+          }
+        }
+      }
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:46.905909"
+  },
+  "laos": {
+    "url": "wss://laos-rpc.dwellir.com",
+    "democracy": {
+      "type": "democracy",
+      "index": 0,
+      "total_count": 1,
+      "info": {
+        "Ongoing": {
+          "end": 1058400,
+          "proposal": {
+            "Lookup": {
+              "hash": "0x9b8f88c7b1e66aaad8174cf817616a108b79fb726694478db4fc3e402bed2462",
+              "len": 6
+            }
+          },
+          "threshold": "SimpleMajority",
+          "delay": 57600,
+          "tally": {
+            "ayes": 0,
+            "nays": 0,
+            "turnout": 0
+          }
+        }
+      }
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:49.657017"
+  },
+  "litentry": {
+    "url": "wss://rpc.litentry-parachain.litentry.io",
+    "democracy": {
+      "type": "democracy",
+      "index": 34,
+      "total_count": 35,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 6010148
+        }
+      },
+      "ended_at": "2024-10-22"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:44:59.023213"
+  },
+  "logion": {
+    "url": "wss://para-rpc01.logion.network",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:01.583748"
+  },
+  "manta": {
+    "url": "wss://ws.manta.systems",
+    "democracy": {
+      "type": "democracy",
+      "index": 2,
+      "total_count": 3,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 2772000
+        }
+      },
+      "ended_at": "2024-04-19"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:11.204169"
+  },
+  "moonbeam": {
+    "url": "wss://moonbeam.ibp.network",
+    "democracy": null,
+    "opengov": {
+      "type": "opengov",
+      "index": 80,
+      "total_count": 81,
+      "info": {
+        "Ongoing": {
+          "track": 0,
+          "origin": {
+            "system": "Root"
+          },
+          "proposal": {
+            "Lookup": {
+              "hash": "0x8593387cf540824a06cd034efb006834c8718693020c07742c0903fdd4a74578",
+              "len": 74
+            }
+          },
+          "enactment": {
+            "After": 100
+          },
+          "submitted": 8519466,
+          "submission_deposit": {
+            "who": "0x8fb091a5fb8a789150c3e6c93f51ba7576a491a9",
+            "amount": 1000000000000000000000
+          },
+          "decision_deposit": {
+            "who": "0x381d106c440f92654827d2b2c637dd5b38a362a7",
+            "amount": 2000000000000000000000000
+          },
+          "deciding": {
+            "since": 8533866,
+            "confirming": null
+          },
+          "tally": {
+            "ayes": 9240808419150116659710000,
+            "nays": 0,
+            "support": 7183974569748939320400000
+          },
+          "in_queue": false,
+          "alarm": [
+            8734432,
+            [
+              8734432,
+              0
+            ]
+          ]
+        }
+      }
+    },
+    "last_checked": "2024-12-01T20:45:13.740125"
+  },
+  "nodle": {
+    "url": "wss://nodle-parachain.api.onfinality.io/public-ws",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:15.544066"
+  },
+  "parallel": {
+    "url": "wss://polkadot-parallel-rpc.parallel.fi",
+    "democracy": {
+      "type": "democracy",
+      "index": 37,
+      "total_count": 38,
+      "info": {
+        "Ongoing": {
+          "end": 7185600,
+          "proposal": {
+            "Lookup": {
+              "hash": "0xe7ac8d01a234bf409fdd3c59bc276caa735cb68313ddc804f23212f3b397a039",
+              "len": 308
+            }
+          },
+          "threshold": "SuperMajorityApprove",
+          "delay": 7200,
+          "tally": {
+            "ayes": 0,
+            "nays": 0,
+            "turnout": 0
+          }
+        }
+      }
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:22.146103"
+  },
+  "pendulum": {
+    "url": "wss://rpc-pendulum.prd.pendulumchain.tech",
+    "democracy": {
+      "type": "democracy",
+      "index": 55,
+      "total_count": 56,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 3904622
+        }
+      },
+      "ended_at": "2024-10-17"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:29.144945"
+  },
+  "phala": {
+    "url": "wss://phala-rpc.dwellir.com",
+    "democracy": {
+      "type": "democracy",
+      "index": 70,
+      "total_count": 71,
+      "info": {
+        "Ongoing": {
+          "end": 6580261,
+          "proposal": {
+            "Legacy": {
+              "hash": "0x8be40b6bbf57e85a61cde7a9f061b8713b945d3c5577d734b0bde7e2f879a5fb"
+            }
+          },
+          "threshold": "SimpleMajority",
+          "delay": 1,
+          "tally": {
+            "ayes": 10000000000000000,
+            "nays": 0,
+            "turnout": 10000000000000000
+          }
+        }
+      }
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:32.585270"
+  },
+  "polimec": {
+    "url": "wss://polimec.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 18,
+      "total_count": 19,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 2038103
+        }
+      },
+      "ended_at": "2024-09-11"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:36.756556"
+  },
+  "polkadex": {
+    "url": "wss://polkadex-parachain-rpc.dwellir.com",
+    "democracy": {
+      "type": "democracy",
+      "total_count": 0,
+      "info": null
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:38.872073"
+  },
+  "robonomics": {
+    "url": "wss://polkadot.rpc.robonomics.network/",
+    "democracy": {
+      "type": "democracy",
+      "index": 2,
+      "total_count": 3,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 391489
+        }
+      },
+      "ended_at": "2024-11-28"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:41.369270"
+  },
+  "sora": {
+    "url": "wss://ws.parachain-collator-3.pc3.sora2.soramitsu.co.jp",
+    "democracy": {
+      "type": "democracy",
+      "index": 14,
+      "total_count": 15,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 1807857
+        }
+      },
+      "ended_at": "2024-09-28"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:42.912940"
+  },
+  "subsocial": {
+    "url": "wss://para.subsocial.network",
+    "democracy": null,
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:44.669300"
+  },
+  "unique": {
+    "url": "wss://unique.ibp.network",
+    "democracy": {
+      "type": "democracy",
+      "index": 11,
+      "total_count": 12,
+      "info": {
+        "Finished": {
+          "approved": true,
+          "end": 5187381
+        }
+      },
+      "ended_at": "2024-06-14"
+    },
+    "opengov": null,
+    "last_checked": "2024-12-01T20:45:52.627102"
+  }
+}
