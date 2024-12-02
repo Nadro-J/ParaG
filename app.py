@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 import json
-from datetime import datetime, timedelta
-import os
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -140,6 +139,5 @@ def index():
                            current_sort=sort_order)
 
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
