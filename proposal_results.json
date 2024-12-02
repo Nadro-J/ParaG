@@ -25,7 +25,7 @@
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:13.364289"
+    "last_checked": "2024-12-02T22:12:23.796899"
   },
   "ajuna": {
     "url": "wss://ajuna.ibp.network",
@@ -42,7 +42,7 @@
       "ended_at": "2024-11-08"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:17.896814"
+    "last_checked": "2024-12-02T22:12:30.304949"
   },
   "astar": {
     "url": "wss://rpc.astar.network",
@@ -62,15 +62,15 @@
           "threshold": "SimpleMajority",
           "delay": 7200,
           "tally": {
-            "ayes": 1941999400000000000000000,
+            "ayes": 1943007460000000000000000,
             "nays": 1000000000000000000,
-            "turnout": 1876632000000000000000000
+            "turnout": 1877634010000000000000000
           }
         }
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:22.443581"
+    "last_checked": "2024-12-02T22:12:38.346194"
   },
   "aventus": {
     "url": "wss://public-rpc.mainnet.aventus.network",
@@ -80,7 +80,7 @@
       "total_count": 0,
       "info": null
     },
-    "last_checked": "2024-12-02T21:12:25.295482"
+    "last_checked": "2024-12-02T22:12:42.173827"
   },
   "bifrost": {
     "url": "wss://bifrost-polkadot.ibp.network",
@@ -115,13 +115,13 @@
       },
       "ended_at": "2024-11-28"
     },
-    "last_checked": "2024-12-02T21:12:38.173044"
+    "last_checked": "2024-12-02T22:12:56.954745"
   },
   "bitgreen": {
     "url": "wss://mainnet.bitgreen.org",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:42.536199"
+    "last_checked": "2024-12-02T22:13:01.108868"
   },
   "centrifuge": {
     "url": "wss://rpc-centrifuge.luckyfriday.io",
@@ -138,7 +138,7 @@
       "ended_at": "2024-12-02"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:45.461527"
+    "last_checked": "2024-12-02T22:13:07.359061"
   },
   "composable": {
     "url": "wss://rpc.composable.finance",
@@ -166,7 +166,7 @@
       },
       "ended_at": "2024-10-19"
     },
-    "last_checked": "2024-12-02T21:12:50.189786"
+    "last_checked": "2024-12-02T22:13:13.171660"
   },
   "continuum": {
     "url": "wss://continuum-rpc-1.metaverse.network/wss",
@@ -183,7 +183,7 @@
       "ended_at": "2024-04-17"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:12:57.139401"
+    "last_checked": "2024-12-02T22:13:20.139174"
   },
   "crust": {
     "url": "wss://crust-parachain.crustnetwork.xyz",
@@ -200,7 +200,7 @@
       "ended_at": "2024-10-24"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:00.565274"
+    "last_checked": "2024-12-02T22:13:22.139449"
   },
   "darwinia": {
     "url": "wss://rpc.darwinia.network",
@@ -221,13 +221,13 @@
       },
       "ended_at": "2024-11-19"
     },
-    "last_checked": "2024-12-02T21:13:11.131781"
+    "last_checked": "2024-12-02T22:13:34.191478"
   },
   "energy_web": {
     "url": "wss://public-rpc.mainnet.energywebx.com",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:14.840359"
+    "last_checked": "2024-12-02T22:13:38.898481"
   },
   "frequency": {
     "url": "wss://0.rpc.frequency.xyz",
@@ -244,13 +244,7 @@
       "ended_at": "2024-10-24"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:18.293793"
-  },
-  "hashed": {
-    "url": "wss://c1.hashed.network",
-    "democracy": null,
-    "opengov": null,
-    "last_checked": "2024-12-02T21:13:20.844930"
+    "last_checked": "2024-12-02T22:13:42.403649"
   },
   "hydradx": {
     "url": "wss://hydradx.paras.ibp.network",
@@ -270,21 +264,21 @@
           "threshold": "SimpleMajority",
           "delay": 22,
           "tally": {
-            "ayes": 542815446824853886529,
+            "ayes": 572044071824853886529,
             "nays": 0,
-            "turnout": 123637784630321252227
+            "turnout": 130944106630321252227
           }
         }
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:25.957325"
+    "last_checked": "2024-12-02T22:13:48.712511"
   },
   "hyperbridge": {
     "url": "wss://nexus.ibp.network",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:27.575353"
+    "last_checked": "2024-12-02T22:13:51.158930"
   },
   "integritee": {
     "url": "wss://polkadot.api.integritee.network",
@@ -294,7 +288,7 @@
       "info": null
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:30.428291"
+    "last_checked": "2024-12-02T22:13:56.145261"
   },
   "interlay": {
     "url": "wss://api.interlay.io/parachain",
@@ -311,13 +305,13 @@
       "ended_at": "2024-11-29"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:36.512623"
+    "last_checked": "2024-12-02T22:14:02.133739"
   },
   "invarch": {
     "url": "wss://invarch-rpc.dwellir.com",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:41.399049"
+    "last_checked": "2024-12-02T22:14:09.253474"
   },
   "kilt": {
     "url": "wss://kilt.ibp.network",
@@ -345,7 +339,7 @@
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:43.467127"
+    "last_checked": "2024-12-02T22:14:12.488451"
   },
   "laos": {
     "url": "wss://laos-rpc.dwellir.com",
@@ -373,7 +367,7 @@
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:13:48.168043"
+    "last_checked": "2024-12-02T22:14:17.719733"
   },
   "litentry": {
     "url": "wss://rpc.litentry-parachain.litentry.io",
@@ -390,13 +384,13 @@
       "ended_at": "2024-10-22"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:00.369547"
+    "last_checked": "2024-12-02T22:14:40.859142"
   },
   "logion": {
     "url": "wss://para-rpc01.logion.network",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:04.240922"
+    "last_checked": "2024-12-02T22:14:44.960175"
   },
   "manta": {
     "url": "wss://ws.manta.systems",
@@ -413,7 +407,7 @@
       "ended_at": "2024-04-19"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:12.405840"
+    "last_checked": "2024-12-02T22:14:54.943632"
   },
   "moonbeam": {
     "url": "wss://moonbeam.ibp.network",
@@ -466,7 +460,7 @@
         }
       }
     },
-    "last_checked": "2024-12-02T21:14:15.183979"
+    "last_checked": "2024-12-02T22:14:58.094299"
   },
   "neuroweb": {
     "url": "wss://parachain-rpc.origin-trail.network",
@@ -483,13 +477,13 @@
       "ended_at": "2024-11-07"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:25.842031"
+    "last_checked": "2024-12-02T22:15:14.036656"
   },
   "nodle": {
     "url": "wss://nodle-parachain.api.onfinality.io/public-ws",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:27.681182"
+    "last_checked": "2024-12-02T22:15:17.778274"
   },
   "parallel": {
     "url": "wss://polkadot-parallel-rpc.parallel.fi",
@@ -517,7 +511,7 @@
       }
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:33.829561"
+    "last_checked": "2024-12-02T22:15:21.713262"
   },
   "pendulum": {
     "url": "wss://rpc-pendulum.prd.pendulumchain.tech",
@@ -534,7 +528,7 @@
       "ended_at": "2024-10-17"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:40.609933"
+    "last_checked": "2024-12-02T22:15:28.702081"
   },
   "phala": {
     "url": "wss://phala-rpc.dwellir.com",
@@ -551,7 +545,7 @@
       "ended_at": "2024-12-01"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:44.984378"
+    "last_checked": "2024-12-02T22:15:37.616189"
   },
   "polimec": {
     "url": "wss://polimec.ibp.network",
@@ -568,7 +562,7 @@
       "ended_at": "2024-09-11"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:50.956740"
+    "last_checked": "2024-12-02T22:15:44.415327"
   },
   "polkadex": {
     "url": "wss://polkadex-parachain-rpc.dwellir.com",
@@ -578,7 +572,7 @@
       "info": null
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:53.762342"
+    "last_checked": "2024-12-02T22:15:48.541939"
   },
   "robonomics": {
     "url": "wss://polkadot.rpc.robonomics.network/",
@@ -595,7 +589,7 @@
       "ended_at": "2024-11-28"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:14:58.492646"
+    "last_checked": "2024-12-02T22:15:55.348875"
   },
   "sora": {
     "url": "wss://ws.parachain-collator-3.pc3.sora2.soramitsu.co.jp",
@@ -612,13 +606,13 @@
       "ended_at": "2024-09-28"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:15:01.399088"
+    "last_checked": "2024-12-02T22:15:59.923154"
   },
   "subsocial": {
     "url": "wss://para.subsocial.network",
     "democracy": null,
     "opengov": null,
-    "last_checked": "2024-12-02T21:15:04.490125"
+    "last_checked": "2024-12-02T22:16:03.526674"
   },
   "unique": {
     "url": "wss://unique.ibp.network",
@@ -635,6 +629,6 @@
       "ended_at": "2024-06-14"
     },
     "opengov": null,
-    "last_checked": "2024-12-02T21:15:23.043249"
+    "last_checked": "2024-12-02T22:16:14.472889"
   }
 }
