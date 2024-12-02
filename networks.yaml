@@ -1,0 +1,76 @@
+acala:
+  url: 'wss://acala-rpc-0.aca-api.network'
+ajuna:
+  url: 'wss://ajuna.ibp.network'
+astar:
+  url: 'wss://rpc.astar.network'
+aventus:
+  url: 'wss://public-rpc.mainnet.aventus.network'
+bifrost:
+  url: 'wss://bifrost-polkadot.ibp.network'
+bitgreen:
+  url: 'wss://mainnet.bitgreen.org'
+centrifuge:
+  url: 'wss://rpc-centrifuge.luckyfriday.io'
+composable:
+  url: 'wss://rpc.composable.finance'
+continuum:
+  url: 'wss://continuum-rpc-1.metaverse.network/wss'
+crust:
+  url: 'wss://crust-parachain.crustnetwork.xyz'
+darwinia:
+  url: 'wss://rpc.darwinia.network'
+energy_web:
+  url: 'wss://public-rpc.mainnet.energywebx.com'
+frequency:
+  url: 'wss://0.rpc.frequency.xyz'
+hashed:
+  url: 'wss://c1.hashed.network'
+hydradx:
+  url: 'wss://hydradx.paras.ibp.network'
+hyperbridge:
+  url: 'wss://nexus.ibp.network'
+integritee:
+  url: 'wss://polkadot.api.integritee.network'
+interlay:
+  url: 'wss://api.interlay.io/parachain'
+invarch:
+  url: 'wss://invarch-rpc.dwellir.com'
+kilt:
+  url: 'wss://kilt.ibp.network'
+laos:
+  url: 'wss://laos-rpc.dwellir.com'
+litentry:
+  url: 'wss://rpc.litentry-parachain.litentry.io'
+logion:
+  url: 'wss://para-rpc01.logion.network'
+manta:
+  url: 'wss://ws.manta.systems'
+moonbeam:
+  url: 'wss://moonbeam.ibp.network'
+neuroweb:
+  url: 'wss://parachain-rpc.origin-trail.network'
+nodle:
+  url: 'wss://nodle-parachain.api.onfinality.io/public-ws'
+parallel:
+  url: 'wss://polkadot-parallel-rpc.parallel.fi'
+pendulum:
+  url: 'wss://rpc-pendulum.prd.pendulumchain.tech'
+phala:
+  url: 'wss://phala-rpc.dwellir.com'
+polimec:
+  url: 'wss://polimec.ibp.network'
+polkadex:
+  url: 'wss://polkadex-parachain-rpc.dwellir.com'
+robonomics:
+  url: 'wss://polkadot.rpc.robonomics.network/'
+sora:
+  url: 'wss://ws.parachain-collator-3.pc3.sora2.soramitsu.co.jp'
+subsocial:
+  url: 'wss://para.subsocial.network'
+t3rn:
+  url: 'wss://ws.t3rn.io'
+unique:
+  url: 'wss://unique.ibp.network'
+zeitgeist:
+  url: 'wss://zeitgeist.api.onfinality.io'
