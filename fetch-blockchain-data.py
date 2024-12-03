@@ -1,10 +1,12 @@
+import os
 import json
-from substrateinterface import SubstrateInterface
-from datetime import datetime
 import yaml
+import vercel_blob
+from datetime import datetime
+from substrateinterface import SubstrateInterface
 
 
-class ProposalChecker:
+class FetchBlockchainData:
     def __init__(self, rpc_file):
         """
         Initialize the checker with an RPC config file
@@ -74,6 +76,7 @@ class ProposalChecker:
                     end_block = latest_ref.value['Finished']['end']
                     result['ended_at'] = self.get_block_epoch(end_block, substrate)
 
+                print("✅ Gov1")
                 return result
 
             return {
@@ -81,8 +84,8 @@ class ProposalChecker:
                 'total_count': 0,  # No proposals
                 'info': None
             }
-        except Exception as e:
-            print(f"Error checking democracy proposal: {str(e)}")
+        except Exception as error:
+            print(f"❌ Gov1: {error}")
             return None
 
     def check_opengov_proposal(self, substrate):
@@ -116,6 +119,7 @@ class ProposalChecker:
                     end_block = latest_ref.value['Approved'][0]  # First item in array is block number
                     result['ended_at'] = self.get_block_epoch(end_block, substrate)
 
+                print("✅ Gov2")
                 return result
 
             return {
@@ -123,8 +127,8 @@ class ProposalChecker:
                 'total_count': 0,  # No proposals
                 'info': None
             }
-        except Exception as e:
-            print(f"Error checking OpenGov proposal: {str(e)}")
+        except Exception as error:
+            print(f"❌ Gov2: {error}")
             return None
 
     def check_all_networks(self):
@@ -156,22 +160,44 @@ class ProposalChecker:
 
         return results
 
-    def save_results(self, results, output_file):
+    @staticmethod
+    def upload_to_vercel_blob(results, output_file):
         """
-        Save results to a JSON file
+        Save results to Vercel Blob storage
 
         Args:
             results (dict): Results to save
-            output_file (str): Path to output file
+            output_file (str): Name to use for the blob
         """
-        with open(output_file, 'w') as f:
-            json.dump(results, f, indent=2)
+        try:
+            # Get the token from environment
+            token = os.environ.get('BLOB_READ_WRITE_TOKEN')
+            if not token:
+                raise Exception('BLOB_READ_WRITE_TOKEN environment variable not set')
+
+            json_data = json.dumps(results, indent=2).encode('utf-8')
+
+            # Upload to Vercel Blob
+            response = vercel_blob.put(
+                path=output_file,
+                data=json_data,
+                options={
+                    'token': token,
+                    'addRandomSuffix': 'false',  # consistent filename
+                    'cacheControlMaxAge': '3600'  # 1 hour cache
+                }
+            )
+
+            print(f"Data uploaded to: {response.get('url')}")
+            return response.get('url')
+
+        except Exception as e:
+            print(f"Error saving to blob: {e}")
+            raise
 
 
 if __name__ == '__main__':
     # Initialize and run the checker
-    checker = ProposalChecker('networks.yaml')
-    results = checker.check_all_networks()
-
-    # Save results to file
-    checker.save_results(results, 'proposal_results.json')
+    fetch_blockchain_data = FetchBlockchainData('networks.yaml')
+    results = fetch_blockchain_data.check_all_networks()
+    fetch_blockchain_data.upload_to_vercel_blob(results, 'proposal_results.json')

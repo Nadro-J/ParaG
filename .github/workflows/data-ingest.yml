@@ -2,8 +2,8 @@ name: Update Proposal Data
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Runs every hour
-  workflow_dispatch:      # Allows manual trigger from GitHub UI
+    - cron: '0 * * * *'   # Runs every hour
+  workflow_dispatch:      # Allows manual trigger
 
 jobs:
   update-data:
@@ -24,19 +24,6 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run update script
-        run: python data-ingest.py
-
-      - name: Check for changes
-        id: check_changes
-        run: |
-          git status --porcelain proposal_results.json | grep -q "proposal_results.json" || exit 0
-          echo "changes_detected=true" >> $GITHUB_OUTPUT
-
-      - name: Commit and push if changed
-        if: steps.check_changes.outputs.changes_detected == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add proposal_results.json
-          git commit -m "Update proposal data [skip ci]"
-          git push
+        env:
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+        run: python main.py

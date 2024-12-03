@@ -1,3 +1,4 @@
 flask==3.0.3
 substrate-interface==1.7.11
 PyYAML==6.0.1
+vercel_blob==0.3.0
