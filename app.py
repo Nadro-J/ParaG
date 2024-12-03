@@ -1,16 +1,19 @@
 from flask import Flask, render_template, request
 import json
+import requests
 from datetime import datetime
 
 app = Flask(__name__)
 
 
 def load_proposal_data():
+    """Load proposal data from Vercel Blob"""
     try:
-        with open('proposal_results.json', 'r') as f:
-            return json.load(f)
+        blob_url = "https://4cwblgexlswrqurf.public.blob.vercel-storage.com/proposal_results.json"
+        response = requests.get(f"{blob_url}")
+        return json.loads(response.content)
     except Exception as e:
-        print(f"Error loading proposal data: {e}")
+        print(f"Error loading data from blob: {e}")
         return {}
 
 
