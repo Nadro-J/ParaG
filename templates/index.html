@@ -62,23 +62,23 @@
 
                     <div class="mb-2">
                         <strong>Governance:</strong>
-                        {% if info.democracy %}
-                            {% if info.democracy.total_count == 0 %}
-                                <span class="badge bg-info">Democracy (No proposals)</span>
+                        {% if info.opengov %}
+                            {% if info.opengov.total_count == 0 %}
+                                <span class="badge bg-primary">OpenGov: <span class="bg-light text-dark px-1 rounded">0</span></span>
                             {% else %}
-                                <span class="badge bg-info">Democracy ({{ info.democracy.total_count }} refs)</span>
+                                <span class="badge bg-primary">OpenGov: <span class="bg-light text-dark px-1 rounded">{{ info.opengov.total_count }}</span></span>
                             {% endif %}
-                            {% if info.democracy.info and info.democracy.info.get('Ongoing') %}
+                            {% if info.opengov.info and info.opengov.info.get('Ongoing') %}
                                 <span class="badge bg-success">Ongoing</span>
                             {% endif %}
                         {% endif %}
-                        {% if info.opengov %}
-                            {% if info.opengov.total_count == 0 %}
-                                <span class="badge bg-primary">OpenGov (No proposals)</span>
+                        {% if info.democracy %}
+                            {% if info.democracy.total_count == 0 %}
+                                <span class="badge bg-primary">Democracy: <span class="bg-light text-dark px-1 rounded">0</span></span>
                             {% else %}
-                                <span class="badge bg-primary">OpenGov ({{ info.opengov.total_count }} refs)</span>
+                                <span class="badge bg-primary">Democracy: <span class="bg-light text-dark px-1 rounded">{{ info.democracy.total_count }}</span></span>
                             {% endif %}
-                            {% if info.opengov.info and info.opengov.info.get('Ongoing') %}
+                            {% if info.democracy.info and info.democracy.info.get('Ongoing') %}
                                 <span class="badge bg-success">Ongoing</span>
                             {% endif %}
                         {% endif %}
