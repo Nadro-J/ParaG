@@ -26,4 +26,4 @@ jobs:
       - name: Run update script
         env:
           BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
-        run: python main.py
+        run: python fetch-blockchain-data.py
