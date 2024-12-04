@@ -1,0 +1,136 @@
+/* Dark theme */
+.dark-theme {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.title-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.title-container h1 {
+    margin-bottom: 15px;
+    color: #FF2670;
+    text-shadow: 0 0 10px rgba(139, 161, 255, 0.3);
+}
+
+.heartbeat-container {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    margin: 0 auto;
+}
+
+.heartbeat-line {
+    stroke: #FF2670;
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+.heartbeat-line-bg {
+    stroke: rgba(139, 161, 255, 0.1);
+    stroke-width: 2;
+    fill: none;
+}
+
+@keyframes heartbeat {
+    0% {
+        stroke-dashoffset: 400;
+    }
+    50% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: -400;
+    }
+}
+
+/* Card styling */
+.network-card {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    transition: transform 0.2s;
+}
+
+.network-card:hover {
+    transform: translateY(-2px);
+}
+
+.network-card .card-title {
+    color: #fff;
+}
+
+/* Status indicator */
+.status-indicator {
+    height: 4px;
+    border-radius: 2px;
+}
+
+.status-dot {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.btn-group {
+    margin-top: 0.5rem;
+}
+
+
+/* Bootstrap overrides for dark theme */
+.btn-outline-primary {
+    color: #DCE2E9;
+    border-color: #DCE2E9;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary.active {
+    background-color: #DCE2E9;
+    border-color: #DCE2E9;
+    color: #121212;
+}
+
+.badge {
+    padding: 0.5em 0.8em;
+}
+
+/* Status colors with better contrast for dark theme */
+.bg-success {
+    background-color: #2d7d4c !important;
+}
+
+.bg-warning {
+    background-color: #b68d0c !important;
+}
+
+.bg-danger {
+    background-color: #b62b2b !important;
+}
+
+.bg-primary {
+    background-color: #4a5baf !important;
+}
+
+.text-success {
+    color: #4caf50 !important;
+}
+
+.timestamp {
+    color: #bdbdbd;
+}
+
+.text {
+    color: #bdbdbd;
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+}
