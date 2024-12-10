@@ -1,9 +1,203 @@
-from flask import Flask, render_template, request
-import json
-import requests
+from flask import Flask, render_template, request, jsonify
+from pywebpush import webpush, WebPushException
+from upstash_redis import Redis
+from dotenv import load_dotenv
 from datetime import datetime
+from functools import wraps
+from pathlib import Path
+import requests
+import hashlib
+import json
+import os
+
+load_dotenv()
+
 
 app = Flask(__name__)
+
+redis = Redis(url=os.environ.get('KV_REST_API_URL'), token=os.environ.get('KV_REST_API_TOKEN'))
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY')
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY')
+VAPID_CLAIMS = {
+    "sub": "mailto:unused@unused.com"
+}
+
+# Rate limiting configuration
+RATE_LIMIT_SUBSCRIBE = 5      # 5 subscription changes
+RATE_LIMIT_WINDOW = 60        # per 1 minute
+
+if not VAPID_PRIVATE_KEY or not VAPID_PUBLIC_KEY:
+    print("Warning: VAPID keys not found in environment variables!")
+
+
+def get_user_id(subscription_info):
+    """Generate a unique user ID from subscription endpoint"""
+    return hashlib.sha256(subscription_info['endpoint'].encode()).hexdigest()
+
+
+def find_logo(network):
+    """Find logo file regardless of extension or case"""
+    logos_dir = os.path.join('static', 'logos')
+    network = network.lower()
+
+    # Check for both .png and .svg extensions
+    for ext in ['.png', '.svg', '.PNG', '.SVG']:
+        # Use Path for case-insensitive matching
+        possible_files = list(Path(logos_dir).glob(f'{network}{ext}'))
+        if possible_files:
+            # Return the path relative to static directory
+            return f'logos/{possible_files[0].name}'
+
+    return None  # Return None if no logo found
+
+
+def rate_limit(limit_key, limit_count):
+    """Rate limiting decorator"""
+
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            # Get subscription info and user ID
+            subscription_info = request.get_json()
+            if not subscription_info:
+                return jsonify({'status': 'error', 'message': 'No subscription info provided'}), 400
+
+            user_id = get_user_id(subscription_info)
+
+            # Create rate limit key specific to user and action
+            rate_key = f"rate:{user_id}:{limit_key}"
+
+            # Get current request count
+            current = redis.get(rate_key)
+
+            if current is None:
+                # First request in window
+                redis.setex(rate_key, RATE_LIMIT_WINDOW, 1)
+            elif int(current) >= limit_count:
+                # Rate limit exceeded
+                ttl = redis.ttl(rate_key)
+                return jsonify({
+                    'status': 'error',
+                    'message': f'Rate limit exceeded. Please try again in {ttl} seconds'
+                }), 429
+            else:
+                # Increment request count
+                redis.incr(rate_key)
+
+            return f(*args, **kwargs)
+
+        return decorated_function
+
+    return decorator
+
+
+@app.route('/subscribe/<chain>', methods=['POST'])
+@rate_limit('subscribe', RATE_LIMIT_SUBSCRIBE)
+def subscribe(chain):
+    subscription_info = request.get_json()
+    user_id = get_user_id(subscription_info)
+
+    # Store subscription info
+    sub_key = f"sub:{user_id}:{chain}"
+    redis.set(sub_key, json.dumps(subscription_info))
+
+    # Add to chain's subscriber set
+    chain_key = f"chain:{chain}:subscribers"
+    redis.sadd(chain_key, user_id)
+
+    # Add to user's subscribed chains set
+    user_chains_key = f"user:{user_id}:chains"
+    redis.sadd(user_chains_key, chain)
+
+    return jsonify({'status': 'success'})
+
+
+@app.route('/unsubscribe/<chain>', methods=['POST'])
+@rate_limit('subscribe', RATE_LIMIT_SUBSCRIBE)  # Using same limit as subscribe
+def unsubscribe(chain):
+    subscription_info = request.get_json()
+    user_id = get_user_id(subscription_info)
+
+    # Remove subscription info
+    sub_key = f"sub:{user_id}:{chain}"
+    redis.delete(sub_key)
+
+    # Remove from chain's subscriber set
+    chain_key = f"chain:{chain}:subscribers"
+    redis.srem(chain_key, user_id)
+
+    # Remove from user's subscribed chains
+    user_chains_key = f"user:{user_id}:chains"
+    redis.srem(user_chains_key, chain)
+
+    return jsonify({'status': 'success'})
+
+
+@app.route('/subscriptions', methods=['POST'])
+def get_subscriptions():
+    """Get subscriptions for current user"""
+    subscription_info = request.get_json()
+    user_id = get_user_id(subscription_info)
+
+    # Get user's subscribed chains
+    user_chains_key = f"user:{user_id}:chains"
+    subscribed_chains = redis.smembers(user_chains_key)
+
+    print(user_chains_key)
+    print(subscribed_chains)
+
+    return jsonify(list(subscribed_chains) if subscribed_chains else [])
+
+
+def get_chain_subscriptions(chain):
+    """Get all subscriptions for a specific chain"""
+    subscriptions = []
+    chain_key = f"chain:{chain}:subscribers"
+
+    # Get all user IDs subscribed to this chain
+    user_ids = redis.smembers(chain_key)
+
+    for user_id in user_ids:
+        sub_key = f"sub:{user_id}:{chain}"
+        sub_data = redis.get(sub_key)
+        if sub_data:
+            subscriptions.append(json.loads(sub_data))
+
+    return subscriptions
+
+
+def send_web_push(subscription_info, message):
+    try:
+        webpush(
+            subscription_info=subscription_info,
+            data=message,
+            vapid_private_key=VAPID_PRIVATE_KEY,
+            vapid_claims=VAPID_CLAIMS
+        )
+    except WebPushException as e:
+        print(f"Web Push Failed: {e}")
+        if e.response.status_code == 410:
+            user_id = get_user_id(subscription_info)
+            cleanup_invalid_subscription(user_id)
+
+
+def cleanup_invalid_subscription(user_id):
+    """Remove all subscriptions for a user"""
+    # Get user's subscribed chains
+    user_chains_key = f"user:{user_id}:chains"
+    chains = redis.smembers(user_chains_key)
+
+    for chain in chains:
+        # Remove from chain's subscriber set
+        chain_key = f"chain:{chain}:subscribers"
+        redis.srem(chain_key, user_id)
+
+        # Remove subscription info
+        sub_key = f"sub:{user_id}:{chain}"
+        redis.delete(sub_key)
+
+    # Remove user's chain set
+    redis.delete(user_chains_key)
 
 
 def load_proposal_data():
@@ -139,8 +333,15 @@ def index():
     return render_template('index.html',
                            data=sorted_data,
                            get_status_class=get_status_class,
-                           current_sort=sort_order)
+                           current_sort=sort_order,
+                           find_logo=find_logo,
+                           vapid_public_key=VAPID_PUBLIC_KEY)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=True,
+        ssl_context='adhoc'  # This enables HTTPS with a self-signed certificate
+    )
