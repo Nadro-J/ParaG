@@ -26,7 +26,7 @@ frequency:
   url: 'wss://0.rpc.frequency.xyz'
 hashed:
   url: 'wss://c1.hashed.network'
-hydradx:
+hydration:
   url: 'wss://hydradx.paras.ibp.network'
 hyperbridge:
   url: 'wss://nexus.ibp.network'
