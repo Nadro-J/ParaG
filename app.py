@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from pywebpush import webpush, WebPushException
 from upstash_redis import Redis
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from datetime import datetime
 from functools import wraps
 from pathlib import Path
@@ -10,7 +10,7 @@ import hashlib
 import json
 import os
 
-load_dotenv()
+#load_dotenv()
 
 
 app = Flask(__name__)
