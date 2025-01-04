@@ -50,6 +50,8 @@ moonbeam:
   url: 'wss://moonbeam.ibp.network'
 neuroweb:
   url: 'wss://parachain-rpc.origin-trail.network'
+polkadot:
+  url: 'wss://polkadot.dotters.network'
 nodle:
   url: 'wss://nodle-parachain.api.onfinality.io/public-ws'
 parallel:
