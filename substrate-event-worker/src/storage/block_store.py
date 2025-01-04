@@ -1,15 +1,20 @@
 import os
 import logging
 from pathlib import Path
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
 
 class BlockStore:
-    def __init__(self, network_name: str):
+    def __init__(self, network_name: str, clear_file: bool = False):
         self.network_name = network_name
         self.storage_dir = self._ensure_storage_dir()
         self.block_file = self.storage_dir / f"{network_name}.lastblock"
+
+        # Clear existing file if requested
+        if clear_file and self.block_file.exists():
+            self.clear()
 
     def _ensure_storage_dir(self) -> Path:
         """Ensure storage directory exists"""
@@ -26,7 +31,7 @@ class BlockStore:
         except Exception as e:
             logger.error(f"Failed to save last block: {e}")
 
-    def get_last_block(self) -> int | None:
+    def get_last_block(self) -> Optional[int]:
         """Get the last processed block number"""
         try:
             if self.block_file.exists():
