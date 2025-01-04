@@ -1,5 +1,5 @@
 # Substrate Event Worker
-
+![](https://i.imgur.com/lAZzteE.png)  
 A command-line tool for monitoring blockchain events across substrate-based networks. This tool provides real-time monitoring of specified blockchain events with an interactive terminal display.
 
 ## Features
