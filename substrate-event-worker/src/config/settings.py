@@ -6,7 +6,7 @@ from .ruleset import RulesStore
 
 # Default configuration values
 DEFAULT_CONFIG = {
-    'batch_size': 10,
+    'batch_size': 1000,
     'connection_timeout': 15,
     'retry_delay': 5,
     'max_events': 50,
