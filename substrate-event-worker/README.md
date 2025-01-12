@@ -48,6 +48,44 @@ conda activate substrate-worker
 pip install -r requirements.txt
 ```
 
+## Using systemctl
+```bash
+# Copy service file
+# MAKE SURE TO UPDATE THE FOLLOWING PATHS IN substrate-event-worker@.service: 
+#   WorkingDirectory, Environment & ExecStart
+cp substrate-event-worker@.service /etc/systemd/system/
+
+# Reload systemd
+sudo systemctl daemon-reload
+
+# Start service
+sudo systemctl start substrate-event-worker@polkadot
+sudo systemctl start substrate-event-worker@hydration
+
+# Enable on boot
+sudo systemctl enable substrate-event-worker@polkadot
+sudo systemctl enable substrate-event-worker@hydration
+
+# View Logs
+journalctl -u substrate-event-worker@polkadot -f
+journalctl -u substrate-event-worker@hydration -f
+
+# List all services
+systemctl list-units "*substrate*"
+
+  UNIT                                      LOAD   ACTIVE SUB     DESCRIPTION
+  substrate-event-worker@hydration.service  loaded active running Substrate Event Worker - hydration
+  substrate-event-worker@polkadot.service   loaded active running Substrate Event Worker - polkadot
+  system-substrate\x2devent\x2dworker.slice loaded active active  Slice /system/substrate-event-worker
+
+# Stop all services
+sudo systemctl stop "substrate-event-worker@*"
+
+# Start all enabled services
+sudo systemctl start "substrate-event-worker@*" --all
+
+```
+
 ## Usage
 Basic usage:  
 `python3 main.py --network polkadot --watch`  
