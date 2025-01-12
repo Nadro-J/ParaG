@@ -5,10 +5,14 @@ import os
 import logging
 from src.monitoring import BlockRangeGovernanceMonitor
 from src.config import load_config, get_network_names
+import sys
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format='%(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
 )
 logger = logging.getLogger(__name__)
 
