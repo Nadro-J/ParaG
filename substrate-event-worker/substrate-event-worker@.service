@@ -1,0 +1,17 @@
+[Unit]
+Description=Substrate Event Worker - %i
+After=network.target
+
+[Service]
+Type=simple
+User=%u
+WorkingDirectory=/UPDATE_PATH/ParaG/substrate-event-worker
+Environment=PYTHONPATH=/UPDATE_PATH/ParaG/substrate-event-worker/venv/bin/python3
+ExecStart=/root/UPDATE_PATH/substrate-event-worker/venv/bin/python3 main.py --network %i
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
