@@ -8,35 +8,7 @@ from discord import app_commands, ButtonStyle
 from dotenv import load_dotenv
 from pathlib import Path
 
-# Load environment variables
 load_dotenv()
-
-
-def get_available_chains():
-    try:
-        with open('../networks.yaml', 'r') as f:
-            networks = yaml.safe_load(f)
-
-            # Convert network names to choices format and truncate if needed
-            choices = []
-            for name in networks.keys():
-                # Truncate name if it's too long (leaving room for "...")
-                display_name = name.title()
-                if len(display_name) > 97:  # 100 character limit - 3 for "..."
-                    display_name = display_name[:97] + "..."
-
-                choices.append(app_commands.Choice(name=display_name, value=name))
-
-            # Take only the first 25 choices if there are more
-            if len(choices) > 25:
-                print(f"Warning: Truncating choices from {len(choices)} to 25")
-                choices = choices[:25]
-
-            return choices
-    except Exception as e:
-        print(f"Error loading networks: {e}")
-        return []
-
 
 class ConfirmSubscriptionView(View):
     def __init__(self, original_interaction, chain, existing_chain, callback):
@@ -53,16 +25,47 @@ class ConfirmSubscriptionView(View):
         confirm_button.callback = self.button_callback
         self.add_item(confirm_button)
 
+        # Add cancel button
+        cancel_button = Button(
+            style=ButtonStyle.secondary,
+            label="Cancel",
+            custom_id="cancel_subscribe"
+        )
+        cancel_button.callback = self.cancel_callback
+        self.add_item(cancel_button)
+
     async def button_callback(self, interaction: discord.Interaction):
         if interaction.user.id == self.original_interaction.user.id:
-            # Disable the button after it's clicked
-            self.children[0].disabled = True
+            for button in self.children:
+                button.disabled = True
             await interaction.response.edit_message(view=self)
-            # Call the original subscription logic
             await self.callback()
         else:
             await interaction.response.send_message(
                 "Only the command user can confirm this action.",
+                ephemeral=True
+            )
+
+    async def cancel_callback(self, interaction: discord.Interaction):
+        if interaction.user.id == self.original_interaction.user.id:
+            try:
+                # Use defer to acknowledge the interaction first
+                await interaction.response.defer()
+
+                await interaction.edit_original_response(content="Cancelled", view=None)
+
+                try:
+                    await interaction.delete_original_response()
+                except discord.NotFound:
+                    pass
+            except Exception as e:
+                try:
+                    await interaction.followup.send("Cancelled", ephemeral=True)
+                except:
+                    pass
+        else:
+            await interaction.response.send_message(
+                "Only the command user can cancel this action.",
                 ephemeral=True
             )
 
@@ -85,6 +88,7 @@ class ChainCommands(app_commands.Group):
         super().__init__(name="alerts", description="Subscribe to governance alerts")
         self.bot = bot
 
+
     @staticmethod
     def is_bot_owner():
         async def predicate(interaction: discord.Interaction) -> bool:
@@ -98,6 +102,20 @@ class ChainCommands(app_commands.Group):
             return interaction.user.id == interaction.guild.owner_id
 
         return app_commands.check(predicate)
+
+    async def chain_autocomplete(self, interaction: discord.Interaction, current: str,) -> list[app_commands.Choice[str]]:
+        with open('../networks.yaml', 'r') as f:
+            networks = yaml.safe_load(f)
+
+        choices = []
+        for name in networks.keys():
+            if current.lower() in name.lower():
+                display_name = name.title()
+                if len(display_name) > 97:
+                    display_name = display_name[:97] + "..."
+                choices.append(app_commands.Choice(name=display_name, value=name))
+
+        return choices[:25]
 
     @app_commands.command(name="debug")
     @is_bot_owner()
@@ -122,12 +140,11 @@ class ChainCommands(app_commands.Group):
                         })
 
             if found_subscriptions:
+                print(found_subscriptions)
                 debug_info = [f"Found {len(found_subscriptions)} subscriptions:"]
                 for sub in found_subscriptions:
-                    debug_info.append("\nSubscription:")
-                    debug_info.append(f"Chain: {sub['chain']}")
+                    debug_info.append(f"\nChain: {sub['chain']}")
                     debug_info.append(f"Channel: #{sub['channel_name']}")
-                    debug_info.append(f"Server: {sub['guild_name']}")
                     debug_info.append(f"Webhook ID: {sub['webhook_id']}")
             else:
                 debug_info = [f"No subscriptions found for: {lookup}"]
@@ -181,9 +198,9 @@ class ChainCommands(app_commands.Group):
             )
 
     @app_commands.command(name="subscribe")
-    @app_commands.describe(chain="The blockchain to subscribe to", channel="The channel to send updates to (defaults to current channel)")
-    @app_commands.choices(chain=[*get_available_chains()])
-    async def subscribe(self, interaction: discord.Interaction, chain: str, channel: discord.TextChannel = None):
+    @app_commands.describe(chain="The blockchain to subscribe to", notify_role="Role to notify for updates", channel="The channel to send updates to (defaults to current channel)")
+    @app_commands.autocomplete(chain=chain_autocomplete)
+    async def subscribe(self, interaction: discord.Interaction, chain: str, notify_role: discord.Role, channel: discord.TextChannel = None):
         try:
             target_channel = channel or interaction.channel
             if not target_channel.permissions_for(interaction.user).manage_webhooks:
@@ -193,6 +210,7 @@ class ChainCommands(app_commands.Group):
                 )
                 return
 
+            # Check for any pending subscriptions in progress
             webhooks = await target_channel.webhooks()
             webhook = discord.utils.get(webhooks, name='Chain Updates')
 
@@ -204,11 +222,22 @@ class ChainCommands(app_commands.Group):
                     existing_sub = json.loads(existing_data)
                     existing_chain = existing_sub.get('chain')
 
+                    # Check if there's already a subscription confirmation pending
+                    async for message in target_channel.history(limit=10):
+                        if (message.author.id == interaction.client.user.id and
+                                "Continuing will replace the existing subscription" in message.content and
+                                not message.content.startswith("✅")):
+                            await interaction.response.send_message(
+                                "⚠️ There's already a pending subscription confirmation in this channel. "
+                                "Please handle that first or wait for it to expire.",
+                                ephemeral=True
+                            )
+                            return
+
                     if existing_chain and existing_chain != chain:
                         async def subscribe_callback():
-                            await self.process_subscription(interaction, chain, target_channel)
+                            await self.process_subscription(interaction, chain, notify_role, target_channel)
 
-                        # Create confirmation view
                         view = ConfirmSubscriptionView(
                             interaction,
                             chain,
@@ -223,8 +252,14 @@ class ChainCommands(app_commands.Group):
                             ephemeral=True
                         )
                         return
+                    elif existing_chain == chain:
+                        await interaction.response.send_message(
+                            f"⚠️ This channel is already subscribed to **{chain}** updates.",
+                            ephemeral=True
+                        )
+                        return
 
-            await self.process_subscription(interaction, chain, target_channel)
+            await self.process_subscription(interaction, chain, notify_role, target_channel)
 
         except Exception as e:
             await interaction.response.send_message(
@@ -232,11 +267,28 @@ class ChainCommands(app_commands.Group):
                 ephemeral=True
             )
 
-    async def process_subscription(self, interaction: discord.Interaction, chain: str, target_channel: discord.TextChannel):
+    async def process_subscription(self, interaction: discord.Interaction, chain: str, notify_role: discord.Role, target_channel: discord.TextChannel):
         """Process the actual subscription after confirmation if needed"""
         try:
             webhooks = await target_channel.webhooks()
             webhook = discord.utils.get(webhooks, name='Chain Updates')
+
+            # If webhook exists, clean up old Redis entries before creating new subscription
+            if webhook:
+                webhook_key = f"webhook:{webhook.id}"
+                # Get existing subscription data to find the old chain
+                existing_data = self.bot.redis.get(webhook_key)
+                if existing_data:
+                    existing_sub = json.loads(existing_data)
+                    old_chain = existing_sub.get('chain')
+                    if old_chain:
+                        # Remove webhook ID from old chain's set
+                        old_chain_key = f"chain:{old_chain}:webhooks"
+                        self.bot.redis.srem(old_chain_key, str(webhook.id))
+                    # Delete the old webhook data
+                    self.bot.redis.delete(webhook_key)
+
+            # Create new webhook if it doesn't exist
             if not webhook:
                 try:
                     avatar_path = next((p for p in Path('..', 'static', 'logos').glob(f'{chain}.*') if p.stem.lower() == chain.lower()), None)
@@ -249,7 +301,7 @@ class ChainCommands(app_commands.Group):
                     print(f"Failed to create webhook with avatar: {e}")
                     webhook = await target_channel.create_webhook(name='Chain Updates')
 
-            # Store subscription in Redis
+            # Store new subscription in Redis
             webhook_key = f"webhook:{webhook.id}"
             subscription = {
                 'webhook_url': webhook.url,
@@ -257,7 +309,8 @@ class ChainCommands(app_commands.Group):
                 'channel_name': target_channel.name,
                 'guild_id': str(interaction.guild_id),
                 'guild_name': interaction.guild.name,
-                'chain': chain
+                'chain': chain,
+                'notify': str(notify_role.id)
             }
 
             # Store webhook info
@@ -269,12 +322,12 @@ class ChainCommands(app_commands.Group):
 
             if not interaction.response.is_done():
                 await interaction.response.send_message(
-                    f"✅ Successfully subscribed to {chain} updates in {target_channel.mention}",
+                    f"✅ Successfully subscribed to {chain} updates in {target_channel.mention} with {notify_role.mention} notifications",
                     ephemeral=True
                 )
             else:
                 await interaction.edit_original_response(
-                    content=f"✅ Successfully subscribed to {chain} updates in {target_channel.mention}",
+                    content=f"✅ Successfully subscribed to {chain} updates in {target_channel.mention} with {notify_role.mention} notifications",
                     view=None
                 )
 
@@ -287,7 +340,7 @@ class ChainCommands(app_commands.Group):
 
     @app_commands.command(name="unsubscribe")
     @app_commands.describe(chain="The blockchain to unsubscribe from", channel="The channel to unsubscribe (defaults to current channel)")
-    @app_commands.choices(chain=[*get_available_chains()])
+    @app_commands.autocomplete(chain=chain_autocomplete)
     async def unsubscribe(self, interaction: discord.Interaction, chain: str, channel: discord.TextChannel = None):
         try:
             target_channel = channel or interaction.channel
@@ -349,7 +402,7 @@ class ChainCommands(app_commands.Group):
             if server_subscriptions:
                 subscriptions_info = [f"Found {len(server_subscriptions)} active subscriptions in this server:"]
                 for sub in server_subscriptions:
-                    subscriptions_info.append(f"- {sub['chain']} in <#{sub['channel_id']}>")
+                    subscriptions_info.append(f"- {sub['chain']} in <#{sub['channel_id']}> - `{sub['channel_id']}`")
 
                 await interaction.response.send_message(
                     "\n".join(subscriptions_info),
@@ -372,7 +425,6 @@ def setup_bot():
     bot = ChainUpdateBot()
     chain_commands = ChainCommands(bot)
     bot.tree.add_command(chain_commands)
-
     return bot
 
 
