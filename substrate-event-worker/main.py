@@ -9,7 +9,7 @@ import sys
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(levelname)s - %(message)s',
+    format='%(levelname)s - %(filename)s:%(lineno)d <- %(funcName)s() - %(message)s',
     handlers=[
         logging.StreamHandler(sys.stdout)
     ]
@@ -56,6 +56,12 @@ def parse_arguments() -> argparse.Namespace:
         help='Path to config file (default: auto-discover)'
     )
 
+    parser.add_argument(
+        '--discord',
+        action='store_true',
+        help='Enable Discord notifications via Redis webhook system'
+    )
+
     return parser.parse_args()
 
 
@@ -81,7 +87,8 @@ async def main() -> None:
             network_name=args.network,
             ws_url=config[args.network]['url'],
             display_mode=args.watch,
-            debug=args.debug
+            debug=args.debug,
+            enable_discord=args.discord
         )
 
         # Start monitoring
